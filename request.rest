@@ -1,0 +1,42 @@
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NzMxNDM1NzF9.M_gOEnSt3fs_X-IYVss33MaVovYq3fXvxg449XtUd9k
+
+
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name" : "Anto",
+    "id" : "2",
+    "password" : "password123"
+}
+
+###
+DELETE  http://localhost:3000/user/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NzMxNDM1NzF9.M_gOEnSt3fs_X-IYVss33MaVovYq3fXvxg449XtUd9k
+Content-Type: application/json
+
+###
+POST http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+    "name" : "san",
+    "password" : "password123"
+
+}
+
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username" : "rocky"
+}
+
+###
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzI3OTcwODV9.osvJSbu2EpAsS5FXmGWt50yZVY8Ypgkj1rzfn3tWWyQ
