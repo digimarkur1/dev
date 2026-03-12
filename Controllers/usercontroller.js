@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
+
+
 exports.userlogin = async (req, res) => {
     const user = await User.findOne({
         name: req.body.name
@@ -12,10 +14,10 @@ exports.userlogin = async (req, res) => {
     }
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const username = req.body.username;
-            const user = { name: username };
+            const username = req.body.name;
+            const payload = { name: username };
 
-            const accesstoken = jwt.sign(user, process.env.ACCESS_TOKEN);
+            const accesstoken = jwt.sign(payload, process.env.ACCESS_TOKEN);
             return res.status(200).json({
                 message: "login successfully",
                 accesstoken: accesstoken
@@ -35,10 +37,10 @@ exports.userlogin = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-    const username = req.body.username;
-    const user = { name: username };
+    const username = req.body.name;
+    const payload1 = { name: username };
 
-    const accesstoken = jwt.sign(user, process.env.ACCESS_TOKEN);
+    const accesstoken = jwt.sign(payload1, process.env.ACCESS_TOKEN);
     res.json({ accesstoken: accesstoken });
 };
 
@@ -60,10 +62,17 @@ exports.createuser = async (req, res) => {
 
 
 exports.getuser = async (req, res) => {
-    const users = await User.find();
-    res.json(users);
+    //const user = await User.find();
+    const user = await User.find({ name: req.user.name });
+
+    res.json(user);
 };
 
+
+exports.getuserid = async (req, res) => {
+    const user = await User.findOne({id:req.params.id});
+    res.json(user);
+};
 
 exports.deleteuser =  async (req, res) => {
     const deleteuser = await User.findOneAndDelete({

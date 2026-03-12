@@ -5,9 +5,9 @@ const authToken = require('../Middleware/authmiddleware')
 
 Router.post('/users', Usercontroller.createuser)
 Router.get('/users', authToken, Usercontroller.getuser)
-Router.post('/login', authToken, Usercontroller.login)
+Router.post('/login', Usercontroller.login)
 Router.post('/user/login', Usercontroller.userlogin)
 Router.delete('/user/:id', authToken, Usercontroller.deleteuser)
-
+Router.get('/user/:id', authToken, Usercontroller.getuserid)
 
 module.exports= Router;
