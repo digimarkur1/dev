@@ -8,26 +8,6 @@ app.use(express.json());
 const userroutes = require('./Routes/userroutes');
 app.use('/',userroutes);
 
-/*
-const posts = [
-    {
-        "username": "rocky",
-        "title": "post 1"
-    },
-    {
-        "username": "anto",
-        "title": "post 2"
-    }
-]
-
-
-app.get('/posts', authtoken, (req, res) => {
-    res.json(posts.filter(post => post.username === req.user.name))
-})
-
-
-  */
-
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
