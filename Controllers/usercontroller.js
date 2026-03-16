@@ -129,7 +129,10 @@ exports.login = async (req, res) => {
 
 
 exports.logout = async (req, res) => {
-    await refreshtokens.deleteOne({ token: req.body.token })
+    //logout only one
+    //await refreshtokens.deleteOne({ token: req.body.token })
+    //logout from all login
+    await refreshtokens.deleteMany({ name: req.body.name })
     res.sendStatus(204);
 };
 
