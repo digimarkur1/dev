@@ -10,5 +10,6 @@ Router.post('/user/login', Usercontroller.userlogin)
 Router.delete('/user/:id', authToken, Usercontroller.deleteuser)
 Router.get('/user/:id', authToken, Usercontroller.getuserid)
 Router.post('/token',Usercontroller.getToken)
+Router.delete('/logout', Usercontroller.logout)
 
 module.exports= Router;

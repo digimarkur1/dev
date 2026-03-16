@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
+
 function generateaccesstoken(payload){
    return jwt.sign(payload, process.env.ACCESS_TOKEN, {expiresIn : "60s"});
 }
@@ -11,14 +12,17 @@ function generateaccesstoken(payload){
 //let refreshtokens = [];
 exports.getToken = async (req, res) => {
     const refreshtoken = req.body.token;
+    console.log("refreshtoken-gettoken>>>",refreshtoken)
     if(refreshtoken == null) return res.sendStatus(401)
     //if(!refreshtokens.includes(refreshtoken)) return res.sendStatus(403)
     const tokenDoc = await refreshtokens.findOne({ token: refreshtoken });
+    console.log("tokenDoc>>>>",tokenDoc)
 
     if (!tokenDoc) return res.sendStatus(403);
     jwt.verify(refreshtoken, process.env.REFRESH_TOKEN, (err, payload) =>{
         if (err) return res.sendStatus (403)
-        const accesstoken = generateaccesstoken(payload)
+        const accesstoken = generateaccesstoken({name:payload.name})
+        console.log({"payloaddddd" :payload, "newaccesstoken":accesstoken})
         return res.json({accessToken : accesstoken})
     })
      
@@ -33,9 +37,9 @@ exports.userlogin = async (req, res) => {
     }
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const username = req.body.name;
-            const payload = { name: username };
-
+            
+            const payload = { name: req.body.name };
+            console.log("givepayloaddd>>", payload)
             const accesstoken = generateaccesstoken(payload)
             const refreshtoken = jwt.sign(payload, process.env.REFRESH_TOKEN)
             //refreshtokens.push(refreshtoken)
@@ -64,11 +68,18 @@ exports.userlogin = async (req, res) => {
 
 exports.login = async (req, res) => {
     const username = req.body.name;
-    const payload1 = { name: username };
+    const payload = { name: username };
 
-    const accesstoken = jwt.sign(payload1, process.env.ACCESS_TOKEN);
+    const accesstoken = jwt.sign(payload, process.env.ACCESS_TOKEN);
     res.json({ accesstoken: accesstoken });
 };
+
+
+exports.logout = async (req, res) => {
+    await refreshtokens.deleteOne({ token: req.body.token })
+    res.sendStatus(204);
+};
+
 
 exports.createuser = async (req, res) => {
     try {
