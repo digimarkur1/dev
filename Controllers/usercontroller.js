@@ -1,9 +1,28 @@
 const User = require('../Models/usermodel');
+const refreshtokens = require('../Models/refreshtoken')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
+function generateaccesstoken(payload){
+   return jwt.sign(payload, process.env.ACCESS_TOKEN, {expiresIn : "60s"});
+}
 
+//let refreshtokens = [];
+exports.getToken = async (req, res) => {
+    const refreshtoken = req.body.token;
+    if(refreshtoken == null) return res.sendStatus(401)
+    //if(!refreshtokens.includes(refreshtoken)) return res.sendStatus(403)
+    const tokenDoc = await refreshtokens.findOne({ token: refreshtoken });
+
+    if (!tokenDoc) return res.sendStatus(403);
+    jwt.verify(refreshtoken, process.env.REFRESH_TOKEN, (err, payload) =>{
+        if (err) return res.sendStatus (403)
+        const accesstoken = generateaccesstoken(payload)
+        return res.json({accessToken : accesstoken})
+    })
+     
+}
 
 exports.userlogin = async (req, res) => {
     const user = await User.findOne({
@@ -17,10 +36,17 @@ exports.userlogin = async (req, res) => {
             const username = req.body.name;
             const payload = { name: username };
 
-            const accesstoken = jwt.sign(payload, process.env.ACCESS_TOKEN);
+            const accesstoken = generateaccesstoken(payload)
+            const refreshtoken = jwt.sign(payload, process.env.REFRESH_TOKEN)
+            //refreshtokens.push(refreshtoken)
+            await refreshtokens.create({
+            token: refreshtoken,
+            username: payload.name
+            });
             return res.status(200).json({
                 message: "login successfully",
-                accesstoken: accesstoken
+                accessToken: accesstoken,
+                refreshToken : refreshtoken
             })
 
         } else {
@@ -62,9 +88,8 @@ exports.createuser = async (req, res) => {
 
 
 exports.getuser = async (req, res) => {
-    //const user = await User.find();
-    const user = await User.find({ name: req.user.name });
-
+    const user = await User.find();
+    //const user = await User.find({ name: req.user.name });
     res.json(user);
 };
 
