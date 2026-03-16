@@ -9,15 +9,18 @@ function generateaccesstoken(payload){
    return jwt.sign(payload, process.env.ACCESS_TOKEN, {expiresIn : "60s"});
 }
 
-//let refreshtokens = [];
+/*let refreshtokens = [];
 exports.getToken = async (req, res) => {
     const refreshtoken = req.body.token;
+    const hashrefreshtokens = await bcrypt.hash(refreshtoken,10)
     console.log("refreshtoken-gettoken>>>",refreshtoken)
+    console.log("hshrefreshtoken",hashrefreshtokens)
     if(refreshtoken == null) return res.sendStatus(401)
     //if(!refreshtokens.includes(refreshtoken)) return res.sendStatus(403)
     const tokenDoc = await refreshtokens.findOne({ token: refreshtoken });
     console.log("tokenDoc>>>>",tokenDoc)
-
+    try{
+        if(refreshtokens == tokenDoc){
     if (!tokenDoc) return res.sendStatus(403);
     jwt.verify(refreshtoken, process.env.REFRESH_TOKEN, (err, payload) =>{
         if (err) return res.sendStatus (403)
@@ -25,8 +28,55 @@ exports.getToken = async (req, res) => {
         console.log({"payloaddddd" :payload, "newaccesstoken":accesstoken})
         return res.json({accessToken : accesstoken})
     })
+
+    }}
+    catch(err){res.sendStatus(500)}
      
-}
+}*/
+
+exports.getToken = async (req, res) => {
+
+    const refreshtoken = req.body.token;
+
+    if (!refreshtoken) return res.sendStatus(401);
+
+    try {
+
+        jwt.verify(
+            refreshtoken,
+            process.env.REFRESH_TOKEN,
+            async (err, payload) => {
+
+                if (err) return res.sendStatus(403);
+
+                const tokenDoc = await refreshtokens
+                    .findOne({ username: payload.name })
+                    .sort({ _id: -1 });
+
+                if (!tokenDoc) return res.sendStatus(403);
+
+                const isMatch = await bcrypt.compare(
+                    refreshtoken,
+                    tokenDoc.token
+                );
+
+                console.log("bcrypt result >>>", isMatch);
+
+                if (!isMatch) return res.sendStatus(403);
+
+                const accesstoken =
+                    generateaccesstoken({ name: payload.name });
+
+                return res.json({ accessToken: accesstoken });
+            }
+
+        );
+
+    } catch (err) {
+        console.log(err);
+        return res.sendStatus(500);
+    }
+};
 
 exports.userlogin = async (req, res) => {
     const user = await User.findOne({
@@ -42,9 +92,12 @@ exports.userlogin = async (req, res) => {
             console.log("givepayloaddd>>", payload)
             const accesstoken = generateaccesstoken(payload)
             const refreshtoken = jwt.sign(payload, process.env.REFRESH_TOKEN)
+            console.log("refreshtoken>>>",refreshtoken)
+            const hashrefreshtoken = await bcrypt.hash(refreshtoken, 10)
+            console.log("hashrefreshtoken>>>",hashrefreshtoken)
             //refreshtokens.push(refreshtoken)
             await refreshtokens.create({
-            token: refreshtoken,
+            token: hashrefreshtoken,
             username: payload.name
             });
             return res.status(200).json({

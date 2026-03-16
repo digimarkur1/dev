@@ -2,7 +2,7 @@ POST http://localhost:3000/token
 Content-Type: application/json
 
 {
-    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTMxMjN9.N6C7NCnI-qs_HtbW60YRs_opxm-t0zECkBYaY-tbOa8"
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTY1NDd9.Gf1eapxmVYirvmvRYiyZkhY1TKgQUktOyknAoknVHQQ"
 }
 
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTMxMzEsImV4cCI6MTc3MzY1MzE5MX0.ztwQRcYHcb7OBG_IKOAaqKpWyQzjBBKDG5BNYrytsY0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTYyNzUsImV4cCI6MTc3MzY1NjMzNX0.Jjs8AzkeujPAaOePQO14H4bVV6sAEwE3Tk9j_LIwPL8
 
 ###
 GET http://localhost:3000/user/2
