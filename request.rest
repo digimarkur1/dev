@@ -1,57 +1,51 @@
+###
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+    "name" : "San",
+    "id" : "3",
+    "password" : "password123"
+}
+
+###
+
+####
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "name" : "San",
+    "password" : "password123"
+
+}
+
+####
+
 POST http://localhost:3000/token
 Content-Type: application/json
 
 {
-    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTcxNDF9.2nQYzcyNqMEl74Jid5IZw6Jrrf01KkBFAXj6pYz-rXw"
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuIiwiaWF0IjoxNzczNzQwNTIzfQ.jUYDEGLLhYrmbXYEvyqw10DRzfCI5gRYNNWCODrGclg"
 }
 
-
-
-####
-POST http://localhost:3000/user/login
-Content-Type: application/json
-
-{
-    "name" : "rocky",
-    "password" : "password123"
-
-}
 
 ###
 
 
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTY5NzYsImV4cCI6MTc3MzY1NzAzNn0.AolrMEkuPe8Ca500axlNgPsZ1gBxI1Pkmfh5L1r4pzI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuIiwiaWF0IjoxNzczNzQwNTQ2LCJleHAiOjE3NzM3NDA2MDZ9.8y2h-8pQ0RLFfH6sKo2bZx3GZbl4uekaeCnq7WKTw_g
+
 
 ###
 GET http://localhost:3000/user/2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTY5NDIsImV4cCI6MTc3MzY1NzAwMn0.U6YI6jyhKmIoaB6thCcu90dJHQzR_aVXg97ZTsf85Kc
 
-
-
 ###
-POST http://localhost:3000/users
+DELETE  http://localhost:3000/user/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUm9ja3kiLCJpYXQiOjE3NzM3Mzk5MjUsImV4cCI6MTc3MzczOTk4NX0.zaarNvHXXF98HiODs7z1-iVo6BWkQQtsNIELH5XSL1w
 Content-Type: application/json
 
-{
-    "name" : "Anto",
-    "id" : "2",
-    "password" : "password123"
-}
-
-###
-DELETE  http://localhost:3000/user/5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzMzMjMwNTN9.6K-YUZ0NaIbA1gDkYrsMI3Y3l3yDvBt60y4-sMVkb_A
-Content-Type: application/json
-
-###
-
-POST http://localhost:3000/login
-Content-Type: application/json
-
-{
-    "name" : "rocky"
-}
 
 ###
 
@@ -59,5 +53,5 @@ DELETE  http://localhost:3000/logout
 Content-Type: application/json
 
 {
-    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTcxNDF9.2nQYzcyNqMEl74Jid5IZw6Jrrf01KkBFAXj6pYz-rXw"
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuIiwiaWF0IjoxNzczNzQwNTIzfQ.jUYDEGLLhYrmbXYEvyqw10DRzfCI5gRYNNWCODrGclg"
 }

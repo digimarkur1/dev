@@ -78,7 +78,7 @@ exports.getToken = async (req, res) => {
     }
 };
 
-exports.userlogin = async (req, res) => {
+exports.login = async (req, res) => {
     const user = await User.findOne({
         name: req.body.name
     })
@@ -119,14 +119,6 @@ exports.userlogin = async (req, res) => {
 
 
 
-exports.login = async (req, res) => {
-    const username = req.body.name;
-    const payload = { name: username };
-
-    const accesstoken = jwt.sign(payload, process.env.ACCESS_TOKEN);
-    res.json({ accesstoken: accesstoken });
-};
-
 
 exports.logout = async (req, res) => {
     //logout only one
@@ -137,7 +129,7 @@ exports.logout = async (req, res) => {
 };
 
 
-exports.createuser = async (req, res) => {
+exports.signup = async (req, res) => {
     try {
         const hashpassword = await bcrypt.hash(req.body.password, 10)
         const user = new User({
