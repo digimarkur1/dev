@@ -39,7 +39,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuIiwia
 
 ###
 GET http://localhost:3000/user/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9ja3kiLCJpYXQiOjE3NzM2NTY5NDIsImV4cCI6MTc3MzY1NzAwMn0.U6YI6jyhKmIoaB6thCcu90dJHQzR_aVXg97ZTsf85Kc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUm9ja3kiLCJpYXQiOjE3NzM3NDc2MDMsImV4cCI6MTc3Mzc0NzY2M30.2l1bq6S45dvIq-tT50PYA3yRVklYPOUUOa4SSLd-Hww
 
 ###
 DELETE  http://localhost:3000/user/2

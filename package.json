@@ -4,7 +4,8 @@
   "description": "The github.dev web-based editor is a lightweight editing experience that runs entirely in your browser. You can navigate files and source code repositories from GitHub, and make and commit code changes.",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"  },
+    "devStart": "nodemon server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/github/dev.git"
@@ -24,7 +25,9 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mangodb": "^1.0.0",
-    "mongoose": "^9.2.2"
+    "mongoose": "^9.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
