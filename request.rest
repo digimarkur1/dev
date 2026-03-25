@@ -5,7 +5,8 @@ Content-Type: application/json
 {
     "name" : "San",
     "id" : "3",
-    "password" : "password123"
+    "password" : "password123",
+    "role":"user"
 }
 
 ###
@@ -15,8 +16,9 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "name" : "San",
+    "name" : "Anto",
     "password" : "password123"
+    //"role" : "admin"
 
 }
 
@@ -26,7 +28,7 @@ POST http://localhost:3000/token
 Content-Type: application/json
 
 {
-    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuIiwiaWF0IjoxNzczNzQwNTIzfQ.jUYDEGLLhYrmbXYEvyqw10DRzfCI5gRYNNWCODrGclg"
+    "token":"$2b$10$mAaLqZYY/LQ1MRSji6sU/.x.7c.svuCtrFpQ9Eyqy9Iwt/6qKbI4K"
 }
 
 
@@ -34,16 +36,16 @@ Content-Type: application/json
 
 
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuIiwiaWF0IjoxNzczNzQwNTQ2LCJleHAiOjE3NzM3NDA2MDZ9.8y2h-8pQ0RLFfH6sKo2bZx3GZbl4uekaeCnq7WKTw_g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQW50byIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzc0NDQ0MzE3LCJleHAiOjE3NzQ0NDQzNzd9.9IrAll-ufTDRWHdFmnf4mz4awq3rJhOC2PPV1Tbo4OI
 
 
 ###
 GET http://localhost:3000/user/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUm9ja3kiLCJpYXQiOjE3NzM3NDc2MDMsImV4cCI6MTc3Mzc0NzY2M30.2l1bq6S45dvIq-tT50PYA3yRVklYPOUUOa4SSLd-Hww
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQW50byIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzc0NDQ0MzE3LCJleHAiOjE3NzQ0NDQzNzd9.9IrAll-ufTDRWHdFmnf4mz4awq3rJhOC2PPV1Tbo4OI
 
 ###
 DELETE  http://localhost:3000/user/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUm9ja3kiLCJpYXQiOjE3NzM3Mzk5MjUsImV4cCI6MTc3MzczOTk4NX0.zaarNvHXXF98HiODs7z1-iVo6BWkQQtsNIELH5XSL1w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQW50byIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzc0NDQ0MzE3LCJleHAiOjE3NzQ0NDQzNzd9.9IrAll-ufTDRWHdFmnf4mz4awq3rJhOC2PPV1Tbo4OI
 Content-Type: application/json
 
 

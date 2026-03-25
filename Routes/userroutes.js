@@ -2,7 +2,7 @@ const express = require('express')
 const Router = express.Router();
 const Usercontroller = require('../Controllers/usercontroller')
 const authToken = require('../Middleware/authmiddleware')
-
+const authorizeRole = require('../Middleware/authorizeRole');
 
 /**
  * @swagger
@@ -137,7 +137,7 @@ Router.delete('/logout', Usercontroller.logout)
  *       401:
  *         description: Unauthorized
  */
-Router.get('/users', authToken, Usercontroller.getuser)
+Router.get('/users', authToken, authorizeRole("admin","manager"), Usercontroller.getuser)
 
 /**
  * @swagger
@@ -166,7 +166,7 @@ Router.get('/users', authToken, Usercontroller.getuser)
  *       404:
  *         description: User not found
  */
-Router.get('/user/:id', authToken, Usercontroller.getuserid)
+Router.get('/user/:id', authToken, authorizeRole("admin","manager","user"), Usercontroller.getuserid)
 
 
 /**
@@ -192,7 +192,7 @@ Router.get('/user/:id', authToken, Usercontroller.getuserid)
  *       404:
  *         description: User not found
  */
-Router.delete('/user/:id', authToken, Usercontroller.deleteuser)
+Router.delete('/user/:id', authToken, authorizeRole("admin"), Usercontroller.deleteuser)
 
 
 

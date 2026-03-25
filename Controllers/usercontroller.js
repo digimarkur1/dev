@@ -41,7 +41,7 @@ exports.getToken = async (req, res) => {
                 if (!isMatch) return res.sendStatus(403);
 
                 const accesstoken =
-                    generateaccesstoken({ name: payload.name });
+                    generateaccesstoken({ name: payload.name, role:req.body.role });
 
                 return res.json({ accessToken: accesstoken });
             }
@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
             
-            const payload = { name: req.body.name };
+            const payload = { name: user.name, role:user.role };
             console.log("givepayloaddd>>", payload)
             const accesstoken = generateaccesstoken(payload)
             const refreshtoken = jwt.sign(payload, process.env.REFRESH_TOKEN)
@@ -74,7 +74,8 @@ exports.login = async (req, res) => {
             //refreshtokens.push(refreshtoken)
             await refreshtokens.create({
             token: hashrefreshtoken,
-            username: payload.name
+            username: payload.name,
+            role: payload.role
             });
             return res.status(200).json({
                 message: "login successfully",
@@ -111,7 +112,8 @@ exports.signup = async (req, res) => {
         const user = new User({
             name: req.body.name,
             id: req.body.id,
-            password: hashpassword
+            password: hashpassword,
+            role:req.body.role
         });
         const savedUser = await user.save();
         res.status(201).json(savedUser);

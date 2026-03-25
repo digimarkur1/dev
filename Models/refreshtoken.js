@@ -13,7 +13,11 @@ const refreshTokenSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
         //expires: 86400 // auto delete after 1 day (TTL Index)
-    }
+    },
+    role : {
+        type : String,
+        required : true
+}
 });
 
 module.exports = mongoose.model('RefreshToken', refreshTokenSchema);
