@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');   // import config file
+//const apiLimiter = require("./Middleware/rateLimiter");
 
 const app = express();
-
+//app.use("/", apiLimiter); // rate limit only API routes
 app.use(express.json());
 
 /* ---------- SWAGGER MIDDLEWARE ---------- */

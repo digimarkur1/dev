@@ -3,6 +3,7 @@ const Router = express.Router();
 const Usercontroller = require('../Controllers/usercontroller')
 const authToken = require('../Middleware/authmiddleware')
 const authorizeRole = require('../Middleware/authorizeRole');
+const apiLimiter = require("../Middleware/rateLimiter");
 
 /**
  * @swagger
@@ -67,7 +68,7 @@ Router.post('/signup', Usercontroller.signup)
  *       400:
  *         description: Bad Request
  */
-Router.post('/login', Usercontroller.login)
+Router.post('/login', apiLimiter, Usercontroller.login)
 
 
 /**
