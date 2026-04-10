@@ -5,6 +5,15 @@ const authToken = require('../Middleware/authmiddleware')
 const authorizeRole = require('../Middleware/authorizeRole');
 const apiLimiter = require("../Middleware/rateLimiter");
 
+const validate = require("../Middleware/validationMiddleware");
+
+const {
+ signupValidation,
+ loginValidation,
+ tokenValidation,
+ userIdParamValidation
+} = require("../Validators/userValidator");
+
 /**
  * @swagger
  * /signup:
@@ -37,7 +46,7 @@ const apiLimiter = require("../Middleware/rateLimiter");
  *       400:
  *         description: Bad Request
  */
-Router.post('/signup', Usercontroller.signup)
+Router.post('/signup',signupValidation, validate, Usercontroller.signup)
 
 
 /**
@@ -68,7 +77,7 @@ Router.post('/signup', Usercontroller.signup)
  *       400:
  *         description: Bad Request
  */
-Router.post('/login', apiLimiter, Usercontroller.login)
+Router.post('/login', apiLimiter, loginValidation, validate, Usercontroller.login)
 
 
 /**
@@ -95,7 +104,7 @@ Router.post('/login', apiLimiter, Usercontroller.login)
  *       400:
  *         description: Bad Request
  */
-Router.post('/token',Usercontroller.getToken)
+Router.post('/token',tokenValidation, validate, Usercontroller.getToken)
 
 
 /**
@@ -138,7 +147,7 @@ Router.delete('/logout', Usercontroller.logout)
  *       401:
  *         description: Unauthorized
  */
-Router.get('/users', authToken, authorizeRole("admin","manager"), Usercontroller.getuser)
+Router.get('/users', authToken, authorizeRole("admin","manager", "user"), Usercontroller.getuser)
 
 /**
  * @swagger
@@ -167,7 +176,7 @@ Router.get('/users', authToken, authorizeRole("admin","manager"), Usercontroller
  *       404:
  *         description: User not found
  */
-Router.get('/user/:id', authToken, authorizeRole("admin","manager","user"), Usercontroller.getuserid)
+Router.get('/user/:id', authToken, authorizeRole("admin","manager","user"), userIdParamValidation, validate, Usercontroller.getuserid)
 
 
 /**
@@ -193,7 +202,7 @@ Router.get('/user/:id', authToken, authorizeRole("admin","manager","user"), User
  *       404:
  *         description: User not found
  */
-Router.delete('/user/:id', authToken, authorizeRole("admin"), Usercontroller.deleteuser)
+Router.delete('/user/:id', authToken, authorizeRole("admin"), userIdParamValidation, validate, Usercontroller.deleteuser)
 
 
 

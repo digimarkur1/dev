@@ -22,12 +22,14 @@ exports.getToken = async (req, res) => {
             refreshtoken,
             process.env.REFRESH_TOKEN,
             async (err, payload) => {
+                console.log("VERIFY ERROR >>>", err);
+                console.log("PAYLOAD >>>", payload);
+
 
                 if (err) return res.sendStatus(403);
 
                 const tokenDoc = await refreshtokens
-                    .findOne({ username: payload.name })
-                    .sort({ _id: -1 });
+                    .findOne({ username: payload.name });
 
                 if (!tokenDoc) return res.sendStatus(403);
 
@@ -41,7 +43,7 @@ exports.getToken = async (req, res) => {
                 if (!isMatch) return res.sendStatus(403);
 
                 const accesstoken =
-                    generateaccesstoken({ name: payload.name, role:req.body.role });
+                    generateaccesstoken({ name: payload.name, role:payload.role });
 
                 return res.json({ accessToken: accesstoken });
             }
@@ -97,14 +99,41 @@ exports.login = async (req, res) => {
 
 
 
-exports.logout = async (req, res) => {
+/*exports.logout = async (req, res) => {
+   //const refreshtoken = req.body.token;
+   const hashpassword = await bcrypt.compare(req.body.token, refreshtokens.token);
+   console.log("logouttoken")
     //logout only one
-    //await refreshtokens.deleteOne({ token: req.body.token })
+    await refreshtokens.findOneAndDelete({ hashpassword })
     //logout from all login
-    await refreshtokens.deleteMany({ username: req.body.name })
+    //await refreshtokens.deleteMany({ username  })
     res.sendStatus(204);
-};
+};*/
 
+exports.logout = async (req, res) => {
+    const token = req.body.token;
+
+    if (!token) return res.sendStatus(400);
+
+    try {
+        const tokens = await refreshtokens.find();
+
+        for (const doc of tokens) {
+            const isMatch = await bcrypt.compare(token, doc.token);
+
+            if (isMatch) {
+                await refreshtokens.deleteOne({ _id: doc._id });
+                return res.sendStatus(204);
+            }
+        }
+
+        return res.sendStatus(403);
+
+    } catch (err) {
+        console.log(err);
+        return res.sendStatus(500);
+    }
+};
 
 exports.signup = async (req, res) => {
     try {
