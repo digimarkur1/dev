@@ -108,7 +108,7 @@ exports.login = async (req, res) => {
     //logout from all login
     //await refreshtokens.deleteMany({ username  })
     res.sendStatus(204);
-};*/
+};
 
 exports.logout = async (req, res) => {
     const token = req.body.token;
@@ -134,6 +134,25 @@ exports.logout = async (req, res) => {
         return res.sendStatus(500);
     }
 };
+*/
+
+exports.logout = async (req, res) => {
+    const token = req.body.token;
+
+    if (!token) return res.sendStatus(400);
+
+    try {
+        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN);
+
+        await refreshtokens.deleteMany({ username: decoded.name });
+
+        return res.sendStatus(204);
+
+    } catch (err) {
+        return res.sendStatus(403);
+    }
+};
+
 
 exports.signup = async (req, res) => {
     try {
