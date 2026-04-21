@@ -9,6 +9,14 @@ const app = express();
 //app.use("/", apiLimiter); // rate limit only API routes
 app.use(express.json());
 
+const cors = require("cors");
+
+app.use(cors({
+  origin: "*", // allow all (for development)
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 /* ---------- SWAGGER MIDDLEWARE ---------- */
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
