@@ -1,19 +1,22 @@
 const express = require('express');
+
 const mongoose = require('mongoose');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');   // import config file
 //const apiLimiter = require("./Middleware/rateLimiter");
 
+const cors = require("cors");
 const app = express();
 //app.use("/", apiLimiter); // rate limit only API routes
 app.use(express.json());
 
-const cors = require("cors");
+
 
 app.use(cors({
   origin: "*", // allow all (for development)
   methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
 
